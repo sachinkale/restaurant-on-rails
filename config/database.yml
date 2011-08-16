@@ -12,9 +12,9 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: restaurant_development
+  database: restaurant
   pool: 5
-  username: root
+  username: dbuser
   password:
   socket: /var/run/mysqld/mysqld.sock
 
@@ -25,9 +25,9 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: restaurant_test
+  database: restaurant
   pool: 5
-  username: root
+  username: dbuser
   password:
   socket: /var/run/mysqld/mysqld.sock
 
@@ -35,8 +35,8 @@ production:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: restaurant_production
+  database: restaurant
   pool: 5
-  username: root
+  username: dbuser
   password:
   socket: /var/run/mysqld/mysqld.sock
