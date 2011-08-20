@@ -5,3 +5,95 @@
  *= require_self
  *= require_tree . 
 */
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 150%;
+  font-size: 72%;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  color: #888;
+}
+.ui-selected {
+    background: gray;
+}
+#tablebox{
+width:800px;
+height:500px;
+background-color:#f3f3f3;
+
+}
+.rtable{
+width:100px;
+height:40px;
+position:relative;
+}
+
+#ticket{
+  width:50%;
+  height:100%;
+  border:1px solid #ccc;
+  float:right;
+}
+#productbox{
+  border:1px solid #ccc;
+  width:48%;
+  float:left;
+  min-height:400px;
+  padding:2px;
+  margin:2px;
+}
+.product{
+width:100px;
+height:40px;
+}
+#billbox{
+width:100%;
+overflow:auto;
+height:300px;
+}
+#billbox table{
+background:white;
+width:100%;
+}
+td.name{
+white-space: nowrap;
+max-width: 180px;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+td.total{
+background-color:#f4f4f4;
+}
+#billbox table th,#ticket table th{
+  background-color:#ccc;
+  border-bottom:1px dotted #444;
+  font-weight:bold;
+  color:#333;
+}
+#total{
+width:40%;
+}
+#billbox table td{border-bottom: 1px dotted #777;}
+
+.clear{
+clear:both;
+}
+#buttonbox{
+width:100%;
+clear:both;
+}
+#buttonbox ul{
+list-style:none;
+float:right;
+}
+#buttonbox ul li{
+float:left;
+margin-left:10px;
+}
+#customerbox{
+float:left;
+width:30%;
+
+}

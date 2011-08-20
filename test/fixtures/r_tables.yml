@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  floor_id: 1
+  x_position: 1
+  y_position: 1
+  name: MyString
+
+two:
+  floor_id: 1
+  x_position: 1
+  y_position: 1
+  name: MyString

@@ -1,0 +1,33 @@
+<%= form_for(@r_table) do |f| %>
+  <% if @r_table.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@r_table.errors.count, "error") %> prohibited this r_table from being saved:</h2>
+
+      <ul>
+      <% @r_table.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :floor_id %><br />
+    <%= f.number_field :floor_id %>
+  </div>
+  <div class="field">
+    <%= f.label :x_position %><br />
+    <%= f.number_field :x_position %>
+  </div>
+  <div class="field">
+    <%= f.label :y_position %><br />
+    <%= f.number_field :y_position %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

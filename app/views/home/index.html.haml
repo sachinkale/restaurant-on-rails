@@ -1,0 +1,107 @@
+#main{:style => "width:80%;margin:auto"}
+  #accordion
+    %h3 
+      %a="#{@floor.name}"
+    /#tablebox
+    %div
+      #tablebox
+        - @rtables.each do |r|
+          .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px"}
+            =r.name
+    %h3 
+      %a billview
+    #bill
+      #ticket
+        #searchbox
+          =text_field_tag "search"
+        #billbox
+          %table.selectable
+            - 9.times do |i|
+              %tr
+                %td.name
+                  Samosa 
+                %td.price
+                  Rs. 20
+                %td.qty
+                  x 1 
+                %td.total
+                  Rs. 20
+            %tr
+              %td
+                kachori
+              %td
+                Rs. 20
+              %td
+                1
+              %td
+                Rs. 20
+            %tr
+              %td
+                Samosa
+              %td
+                Rs. 20
+              %td
+                1
+              %td
+                Rs. 20
+        .clear
+        %hr
+        #total.right
+          %table
+            %tr
+              %td
+                subtotal
+              %td 100
+            %tr
+              %td 
+                discount
+              %td 0
+            %tr
+              %td 
+                taxes
+              %td 0
+            %tr
+              %td 
+                total
+              %td Rs. 200
+        #customerbox
+          =text_field_tag "Customer name"
+          %a.button
+            submit
+        .clear
+        %hr
+        #buttonbox
+          %ul
+            %li
+              %a.button
+                pay
+            %li
+              %a.button
+                print
+            %li
+              %a.button
+                void
+
+      = select_tag "colors", options_for_select(["Free", "Basic", "Advanced", "Super Platinum"]), :multiple => true
+      #productbox
+        .product
+          sandwich
+        .product
+          kheema
+      .clear
+    
+
+
+
+:javascript
+  $('.rtable').button();
+  $('.product').button();
+  $('.button').button();
+  $('#accordion').accordion({
+         autoheight: false,
+         navigation: true
+  });
+  $('.selectable').selectable({
+    filter: 'tr'
+  
+  });

@@ -1,0 +1,29 @@
+<h1>Listing r_tables</h1>
+
+<table>
+  <tr>
+    <th>Floor</th>
+    <th>X position</th>
+    <th>Y position</th>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @r_tables.each do |r_table| %>
+  <tr>
+    <td><%= r_table.floor_id %></td>
+    <td><%= r_table.x_position %></td>
+    <td><%= r_table.y_position %></td>
+    <td><%= r_table.name %></td>
+    <td><%= link_to 'Show', r_table %></td>
+    <td><%= link_to 'Edit', edit_r_table_path(r_table) %></td>
+    <td><%= link_to 'Destroy', r_table, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New R table', new_r_table_path %>
