@@ -12,14 +12,15 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
+  gem 'jquery-rails','>= 1.0.12'
   gem 'sass-rails', "~> 3.1.0.rc"
   gem 'coffee-rails', "~> 3.1.0.rc"
   gem 'uglifier'
 end
 
-gem 'jquery-rails'
 gem 'therubyracer'
 gem 'haml'
+gem 'coffeebeans'
 
 # Use unicorn as the web server
 # gem 'unicorn'

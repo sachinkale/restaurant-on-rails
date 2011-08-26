@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  r_table_id: 1
+  guest_id: 1
+  status: MyString
+  waiter_id: 1
+
+two:
+  r_table_id: 1
+  guest_id: 1
+  status: MyString
+  waiter_id: 1

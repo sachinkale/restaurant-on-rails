@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  code: MyString
+  category_id: 1
+  sell_price: 1
+  image: MyString
+  attribute: MyText
+
+two:
+  name: MyString
+  code: MyString
+  category_id: 1
+  sell_price: 1
+  image: MyString
+  attribute: MyText

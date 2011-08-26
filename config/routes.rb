@@ -1,4 +1,7 @@
 Restaurant::Application.routes.draw do
+  resource :tickets
+  resource :ticket_lines
+
   resources :r_tables
 
   get "home/index"

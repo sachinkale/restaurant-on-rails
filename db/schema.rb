@@ -10,11 +10,41 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110817063501) do
+ActiveRecord::Schema.define(:version => 20110821122734) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "floors", :force => true do |t|
     t.string   "name"
     t.string   "image"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "guests", :force => true do |t|
+    t.string   "FirstName"
+    t.string   "LastName"
+    t.integer  "age"
+    t.string   "photo"
+    t.text     "address"
+    t.string   "phone"
+    t.string   "email"
+    t.date     "bbirthdate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.integer  "category_id"
+    t.integer  "sell_price"
+    t.string   "image"
+    t.text     "pattribute"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -24,6 +54,24 @@ ActiveRecord::Schema.define(:version => 20110817063501) do
     t.integer  "x_position"
     t.integer  "y_position"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ticket_lines", :force => true do |t|
+    t.integer  "ticket_id"
+    t.integer  "product_id"
+    t.float    "sell_price"
+    t.integer  "qty"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tickets", :force => true do |t|
+    t.integer  "r_table_id"
+    t.integer  "guest_id"
+    t.string   "status"
+    t.integer  "waiter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

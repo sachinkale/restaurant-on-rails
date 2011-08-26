@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  ticket_id: 1
+  product_id: 1
+  sell_price: 
+  qty: 1
+
+two:
+  ticket_id: 1
+  product_id: 1
+  sell_price: 
+  qty: 1
