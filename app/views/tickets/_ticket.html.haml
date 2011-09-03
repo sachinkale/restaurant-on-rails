@@ -1,0 +1,43 @@
+.ticket{:id => "rt#{ticket.id}", :style => "display:none"}
+  .billbox
+    %table
+      -ticket.ticket_lines.includes(:product).each do |tl|
+        %tr{:id => "tl#{tl.id}"}
+          %td
+            = tl.product.name
+          %td
+            = tl.sell_price
+          %td
+            ="x" + tl.qty.to_s
+          %td
+            =tl.sell_price * tl.qty
+
+  .clear
+  %hr
+  #total.right
+    %table
+      %tr
+        %td
+          subtotal
+        %td.ticket_subtotal
+          =ticket.subtotal 
+      %tr
+        %td 
+          discount
+        %td.ticket_discount
+          =ticket.discount
+      %tr
+        %td 
+          taxes
+        %td.ticket_tax
+          =ticket.tax
+      %tr
+        %td 
+          total
+        %td.ticket_total
+          =ticket.total
+  #customerbox
+    =text_field_tag "Customer name"
+    %a.button
+      submit
+  

@@ -8,65 +8,42 @@
         - @rtables.each do |r|
           .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px",:id => "#{ r.active_ticket ? 't' + r.id.to_s + '-ticket-' + r.active_ticket.id.to_s : 't' + r.id.to_s}",:class => "#{ r.active_ticket ? 'occupied' : '' }" }
             =r.name
-    %h3 
-      %a billview
+    %h3.billview
+      %a Bill 
     #bill
-      #ticket
+      #billbutton
+        %a.button#addItem
+          %span.ui-icon.ui-icon-plusthick
+        %br
+        %a.button#subItem
+          %span.ui-icon.ui-icon-minusthick
+        %br
+        %a.button#delItem
+          %span.ui-icon.ui-icon-closethick
+
+        
+      #ticketbox
         #searchbox
           =text_field_tag "search"
-        .billbox
+        .tickets
           -@rtables.each do |rt|
             - ticket = rt.active_ticket
             - if ticket
-              %table{:id => "rt#{ticket.id.to_s}", :style => "display:none"}
-                -ticket.ticket_lines.includes(:product).each do |tl|
-                  %tr
-                    %td
-                      = tl.product.name
-                    %td
-                      = tl.product.sell_price.to_s
-                    %td
-                      ="x" + tl.qty.to_s
-                    %td
-                      =tl.product.sell_price * tl.qty
-
-        .clear
-        %hr
-        #total.right
-          %table
-            %tr
-              %td
-                subtotal
-              %td 100
-            %tr
-              %td 
-                discount
-              %td 0
-            %tr
-              %td 
-                taxes
-              %td 0
-            %tr
-              %td 
-                total
-              %td Rs. 200
-        #customerbox
-          =text_field_tag "Customer name"
-          %a.button
-            submit
+              = render :partial => "tickets/ticket", :locals => {:ticket => ticket}
         .clear
         %hr
         #buttonbox
           %ul
             %li
-              %a.button
+              %a#pay.button
                 pay
             %li
-              %a.button
+              %a#print.button
                 print
             %li
-              %a.button
+              %a#void.button
                 void
+
 
       = select_tag "categories", options_from_collection_for_select(@categories,:id,:name), :multiple => :true
       #productbox
@@ -74,7 +51,7 @@
           .catprod{:id => "cp#{c.id}", :style => "#{(c.id != 1)? 'display:none' : ''}"}
             - c.products.each do |p|
               .button
-                .product{:id => "p#{p.id}"}
+                .product{:id => "p#{p.code}"}
                   =p.name
       .clear
     
@@ -82,7 +59,35 @@
   = f.hidden_field :r_table_id
 = form_for @ticket_line,:remote => :true do |f|
   = f.hidden_field :ticket_id
-  = f.hidden_field :product_id
+  = hidden_field_tag :code
   = f.hidden_field :qty
+= form_tag "/update_ticket_lines", :method => :put, :id => :update_ticket_lines do
+  =hidden_field_tag :action_for_ticket
+  =hidden_field_tag :ticket_line_ids
 
+#pay_dialog{:title => "Pay Bill", :style => "display:none;"}
+
+
+#void_dialog{:title => "Void Bill", :style => "display:none;"}
+  =form_for :ticket,:url => '/tickets', :html =>{ :method => :put, :id => "void_form", } , :remote => true do |f|
+    =f.hidden_field :status
+    Notes:
+    =f.text_area :notes
+
+:javascript
+  $(function(){
+    $('#search').autocomplete({
+      source: #{@products.to_json},
+      select: function(event,ui){
+        getcode = ui.item.value.match(/^\d+/);
+        $('#ticket_line_ticket_id').val($('.ticket:visible').attr('id').match(/\d+/)[0]);
+        $('#code').val(getcode[0]);
+        $('#ticket_line_qty').val(1);
+        $.rails.handleRemote($('#new_ticket_line'));
+      },
+      close: function(event,ui){
+        $('#search').val('');
+      }
+    });
+  });
 

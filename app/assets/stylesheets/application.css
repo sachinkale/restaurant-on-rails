@@ -16,7 +16,7 @@ body {
   color: #888;
 }
 .ui-selected {
-    background: gray;
+    background: #ccc;
 }
 #tablebox{
 width:800px;
@@ -29,16 +29,21 @@ width:100px;
 height:40px;
 position:relative;
 }
-
-#ticket{
-  width:50%;
+#billbutton{
+  width:8%;
+  padding:40px 2px;
+  height:100%;
+  float:right;
+}
+#ticketbox{
+  width:44%;
   height:100%;
   border:1px solid #ccc;
   float:right;
 }
 #productbox{
   border:1px solid #ccc;
-  width:48%;
+  width:44%;
   float:left;
   min-height:400px;
   padding:2px;
@@ -57,14 +62,21 @@ height:300px;
 background:white;
 width:100%;
 }
-td.name{
+.billbox table tr{
+  cursor: pointer;
+}
+.billbox table tr td:first-child{
 white-space: nowrap;
 max-width: 180px;
 overflow: hidden;
 text-overflow: ellipsis;
 }
-td.total{
+.billbox table tr td:nth-child(4){
 background-color:#f4f4f4;
+}
+
+.billbox table tr td:nth-child(3) a{
+
 }
 .billbox table th,#ticket table th{
   background-color:#ccc;

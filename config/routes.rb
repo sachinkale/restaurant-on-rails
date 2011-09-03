@@ -1,10 +1,18 @@
 Restaurant::Application.routes.draw do
-  resource :tickets
-  resource :ticket_lines
+
+
+  resources :tickets
+
+  resources :ticket_lines
 
   resources :r_tables
 
   get "home/index"
+
+  get "home/get_products"
+
+  put "update_ticket_lines",:controller => "ticket_lines", :action => "update"
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

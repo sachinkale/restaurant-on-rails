@@ -5,6 +5,8 @@ class HomeController < ApplicationController
     @rtables = RTable.all
     @floor = Floor.first
     @categories = Category.includes(:products).all
+    @products = Product.all(:select => ['code','name']).map { |p| p.code + ' ' + p.name }
   end
+
 
 end
