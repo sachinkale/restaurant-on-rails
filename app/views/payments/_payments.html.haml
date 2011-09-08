@@ -1,0 +1,34 @@
+-amount = 0
+.payment{:id => "p-#{ticket.id}", :style => "display:none"}
+  %table
+    %tr
+      %th
+        Payment
+      %th
+        Amount
+    -ticket.payments.each do |p|
+      %tr{:id => "Payment-#{p.id}"}
+        %td
+          =p.payment_method.name
+        %td
+          -amount = amount + p.amount
+          =p.amount 
+        %td
+          =link_to payment_path(p.id), :method => :delete, :remote => true do
+            .ui-icon.ui-icon-close
+    %tr
+      %td
+        Total Payments
+      %td.total_payments
+        =amount 
+    %tr
+      %td
+        Total Amount
+      %td.total_amount
+        =ticket.total
+    %tr
+      %td
+        Total Pending
+      %td.total_pending
+        =ticket.total - amount
+

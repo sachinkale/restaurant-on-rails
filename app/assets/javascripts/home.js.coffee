@@ -1,6 +1,11 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 jQuery ->
+  checkpayment = -> 
+    if parseInt($('.payment:visible .total_pending').text()) != 0
+      return false
+    else
+      return true
   $('.rtable').button()
   $('.button').button()
   $('#accordion').accordion
@@ -18,7 +23,7 @@ jQuery ->
       t_id = $(@).attr('id').split(/ticket-/)
       $('.ticket:visible').hide()
       $('#rt' + t_id[1]).show()
-      $('#void_form').attr('action','/tickets/' + t_id[1])
+      $('#update_ticket').attr('action','/tickets/' + t_id[1])
       $('.billview a').html('Bill - ' + $(@).text())
     else
       valarr = $(@).attr('id').match(/\d+/)
@@ -35,12 +40,13 @@ jQuery ->
     $.rails.handleRemote($('#new_ticket_line'))
 
   $('#void_dialog').dialog
+    modal: true,
     autoOpen: false,
     width: 450,
     buttons: 
       "Submit": ->
         $(this).dialog("close") 
-        $.rails.handleRemote($('#void_form'))
+        $.rails.handleRemote($('#update_ticket'))
       , 
       "Cancel": ->
         $(this).dialog("close")
@@ -80,4 +86,57 @@ jQuery ->
         $('#search').val('')
         $('#subItem').focus()
         updateTicketLines()
+  $('#pay_dialog').dialog
+    modal: true,
+    autoOpen: false,
+    width: 450,
+    buttons: 
+      "Submit": ->
+        if checkpayment()
+          $('#ticket_status').val('closed')
+          $.rails.handleRemote($('#update_ticket'))
+          $(this).dialog("close") 
+        else
+          alert "Pending Payment must be zero"
+      , 
+      "Cancel": ->
+        $(this).dialog("close")
+       
+  $('#pay').click ->   
+    $('#payment_owner_id').val($('.ticket:visible').attr('id').match(/\d+/)[0])
+    $('#payment_owner_type').val('Ticket')
+    $('.payment').hide()
+    $('#p-' + $('.ticket:visible').attr('id').match(/\d+/)[0]).show()
+    $('#pay_dialog').dialog 'open'
+    val = parseInt($('.ticket:visible .ticket_total').text())
+    $('.payment:visible .total_amount').html(val)
+    pay = parseInt($('.payment:visible .total_payments').text())
+    $('.payment:visible .total_pending').html(val - pay)
+    if $('#given_amount').is(':visible')
+      amt = '#given_amount'
+      $('#total_remaining').html(val)
+      $('#change_amount').html(0)
+    else
+      amt = '#payment_amount'
+    $(amt).val(val)
+    $(amt).select()
+    $(amt).focus()
+  $('#tabs').tabs()
+  $('#payment_payment_method_id').change ->
+    if $(@).find('option:selected').val() == "2"
+      $('#given_cash').show()
+      $('#other_amount').hide()
+    else
+      $('#given_cash').hide()
+      $('#other_amount').show()
+  $('#given_amount').change ->
+    tot = parseInt($('.ticket:visible .ticket_total').text())
+    given = parseInt($('#given_amount').val())
+    chg = given - tot
+    $('#change_amount').html(chg)
+    if given > tot
+      $('#total_remaining').html(0)
+    else
+      $('#total_remaining').html(tot - given)
 
+      

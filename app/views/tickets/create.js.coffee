@@ -5,7 +5,8 @@ jQuery ->
     $('.ticket:visible').hide()
     $('.tickets').append("<%= escape_javascript(render :partial => "tickets/ticket", :locals => {:ticket => @ticket }) %>")
     $('#rt<%= @ticket.id %>').show()
-    $('#void_form').attr('action', '/tickets/<%= @ticket.id %>')
+    $('#update_ticket').attr('action', '/tickets/<%= @ticket.id %>')
+    $('#payments_holder').append("<%= escape_javascript(render :partial => "payments/payments", :locals => {:ticket => @ticket } ) %>")
     $('.billview a').html('Bill - ' + $("#t<%= @ticket.r_table_id.to_s + '-ticket-' + @ticket.id.to_s %>").text())
     $('.billbox table').selectable filter: 'tr'
   <% else %>

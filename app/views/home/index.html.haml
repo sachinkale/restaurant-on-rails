@@ -66,10 +66,34 @@
   =hidden_field_tag :ticket_line_ids
 
 #pay_dialog{:title => "Pay Bill", :style => "display:none;"}
+  =form_for @payment, :remote => true do |f|
+    =f.select :payment_method_id, options_from_collection_for_select(@payment_methods, :id, :name,2)
+    #given_cash
+      =text_field_tag :given_amount
+      %br
+      =label_tag "change_amount:"
+      %span#change_amount
+      %br
+      =label_tag "total_remaining:"
+      %span#total_remaining
+      =f.hidden_field :amount
+    #other_amount{:style => "display:none"}
+      =f.text_field :amount
+    =f.hidden_field :owner_id
+    =f.hidden_field :owner_type
+    =f.submit "add"
+  #payments_holder     
+    -@rtables.each do |rt|
+      - ticket = rt.active_ticket
+      - if ticket 
+        = render :partial => "payments/payments", :locals => {:ticket => ticket}
+
+  
+
 
 
 #void_dialog{:title => "Void Bill", :style => "display:none;"}
-  =form_for :ticket,:url => '/tickets', :html =>{ :method => :put, :id => "void_form", } , :remote => true do |f|
+  =form_for :ticket,:url => '/tickets', :html =>{ :method => :put, :id => "update_ticket", } , :remote => true do |f|
     =f.hidden_field :status
     Notes:
     =f.text_area :notes

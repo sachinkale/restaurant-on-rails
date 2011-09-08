@@ -1,5 +1,5 @@
 <% if @error %>
-  alert "Error while making void"
+  alert "Error while updating ticket"
 <% else %>
   $('#rt<%= @ticket.id %>').remove()
   $('#t<%= @ticket.r_table_id.to_s + '-ticket-' + @ticket.id.to_s %>').removeClass('occupied')

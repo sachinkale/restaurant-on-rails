@@ -6,6 +6,8 @@ class HomeController < ApplicationController
     @floor = Floor.first
     @categories = Category.includes(:products).all
     @products = Product.all(:select => ['code','name']).map { |p| p.code + ' ' + p.name }
+    @payment_methods = PaymentMethod.all
+    @payment = Payment.new
   end
 
 

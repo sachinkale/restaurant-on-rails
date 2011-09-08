@@ -1,5 +1,6 @@
 Restaurant::Application.routes.draw do
 
+  resources :payments
 
   resources :tickets
 
