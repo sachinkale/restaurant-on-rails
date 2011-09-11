@@ -12,13 +12,13 @@
       %a Bill 
     #bill
       #billbutton
-        %a.button#addItem
+        %a.bbutton#addItem
           %span.ui-icon.ui-icon-plusthick
         %br
-        %a.button#subItem
+        %a.bbutton#subItem
           %span.ui-icon.ui-icon-minusthick
         %br
-        %a.button#delItem
+        %a.bbutton#delItem
           %span.ui-icon.ui-icon-closethick
 
         
@@ -35,13 +35,13 @@
         #buttonbox
           %ul
             %li
-              %a#pay.button
+              %a#pay.bbutton
                 pay
             %li
-              %a#print.button
+              %a#print.bbutton
                 print
             %li
-              %a#void.button
+              %a#void.bbutton
                 void
 
 
@@ -50,7 +50,7 @@
         -@categories.each do |c|
           .catprod{:id => "cp#{c.id}", :style => "#{(c.id != 1)? 'display:none' : ''}"}
             - c.products.each do |p|
-              .button
+              .bbutton
                 .product{:id => "p#{p.code}"}
                   =p.name
       .clear

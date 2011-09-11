@@ -7,4 +7,14 @@
     = csrf_meta_tags
 
   %body
+    #header
+      %h1 Restaurant on Rails
+      %ul#tabs
+        %li.current
+          %a{:href => "/"} Home
+        %li
+          %a{:href => "/closecash"} Close Cash
+        %li
+          %a{:href => "/admin"} Admin
+
     = yield

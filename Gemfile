@@ -21,7 +21,8 @@ end
 gem 'therubyracer'
 gem 'haml'
 gem 'coffeebeans'
-
+gem 'activeadmin'
+gem 'devise'
 # Use unicorn as the web server
 # gem 'unicorn'
 

@@ -7,7 +7,7 @@ jQuery ->
     else
       return true
   $('.rtable').button()
-  $('.button').button()
+  $('.bbutton').button()
   $('#accordion').accordion
     autoheight: false,
     event: false
@@ -121,7 +121,6 @@ jQuery ->
     $(amt).val(val)
     $(amt).select()
     $(amt).focus()
-  $('#tabs').tabs()
   $('#payment_payment_method_id').change ->
     if $(@).find('option:selected').val() == "2"
       $('#given_cash').show()
