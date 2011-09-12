@@ -154,6 +154,7 @@ DEPENDENCIES
   activeadmin
   coffee-rails (~> 3.1.0.rc)
   coffeebeans
+  devise
   haml
   jquery-rails (>= 1.0.12)
   json

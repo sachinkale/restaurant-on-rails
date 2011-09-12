@@ -1,60 +1,59 @@
-#main{:style => "width:80%;margin:auto"}
-  #accordion
-    %h3 
-      %a="#{@floor.name}"
-    /#tablebox
-    %div
-      #tablebox
-        - @rtables.each do |r|
-          .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px",:id => "#{ r.active_ticket ? 't' + r.id.to_s + '-ticket-' + r.active_ticket.id.to_s : 't' + r.id.to_s}",:class => "#{ r.active_ticket ? 'occupied' : '' }" }
-            =r.name
-    %h3.billview
-      %a Bill 
-    #bill
-      #billbutton
-        %a.bbutton#addItem
-          %span.ui-icon.ui-icon-plusthick
-        %br
-        %a.bbutton#subItem
-          %span.ui-icon.ui-icon-minusthick
-        %br
-        %a.bbutton#delItem
-          %span.ui-icon.ui-icon-closethick
+#accordion
+  %h3 
+    %a="#{@floor.name}"
+  /#tablebox
+  %div
+    #tablebox
+      - @rtables.each do |r|
+        .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px",:id => "#{ r.active_ticket ? 't' + r.id.to_s + '-ticket-' + r.active_ticket.id.to_s : 't' + r.id.to_s}",:class => "#{ r.active_ticket ? 'occupied' : '' }" }
+          =r.name
+  %h3.billview
+    %a Bill 
+  #bill
+    #billbutton
+      %a.bbutton#addItem
+        %span.ui-icon.ui-icon-plusthick
+      %br
+      %a.bbutton#subItem
+        %span.ui-icon.ui-icon-minusthick
+      %br
+      %a.bbutton#delItem
+        %span.ui-icon.ui-icon-closethick
 
-        
-      #ticketbox
-        #searchbox
-          =text_field_tag "search"
-        .tickets
-          -@rtables.each do |rt|
-            - ticket = rt.active_ticket
-            - if ticket
-              = render :partial => "tickets/ticket", :locals => {:ticket => ticket}
-        .clear
-        %hr
-        #buttonbox
-          %ul
-            %li
-              %a#pay.bbutton
-                pay
-            %li
-              %a#print.bbutton
-                print
-            %li
-              %a#void.bbutton
-                void
-
-
-      = select_tag "categories", options_from_collection_for_select(@categories,:id,:name), :multiple => :true
-      #productbox
-        -@categories.each do |c|
-          .catprod{:id => "cp#{c.id}", :style => "#{(c.id != 1)? 'display:none' : ''}"}
-            - c.products.each do |p|
-              .bbutton
-                .product{:id => "p#{p.code}"}
-                  =p.name
+      
+    #ticketbox
+      #searchbox
+        =text_field_tag "search"
+      .tickets
+        -@rtables.each do |rt|
+          - ticket = rt.active_ticket
+          - if ticket
+            = render :partial => "tickets/ticket", :locals => {:ticket => ticket}
       .clear
-    
+      %hr
+      #buttonbox
+        %ul
+          %li
+            %a#pay.bbutton
+              pay
+          %li
+            %a#print.bbutton
+              print
+          %li
+            %a#void.bbutton
+              void
+
+
+    = select_tag "categories", options_from_collection_for_select(@categories,:id,:name), :multiple => :true
+    #productbox
+      -@categories.each do |c|
+        .catprod{:id => "cp#{c.id}", :style => "#{(c.id != 1)? 'display:none' : ''}"}
+          - c.products.each do |p|
+            .bbutton
+              .product{:id => "p#{p.code}"}
+                =p.name
+    .clear
+  
 = form_for @ticket, :remote => :true do |f|
   = f.hidden_field :r_table_id
 = form_for @ticket_line,:remote => :true do |f|

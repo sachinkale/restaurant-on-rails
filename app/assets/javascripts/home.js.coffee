@@ -138,4 +138,4 @@ jQuery ->
     else
       $('#total_remaining').html(tot - given)
 
-      
+       

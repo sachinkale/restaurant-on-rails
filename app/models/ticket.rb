@@ -3,6 +3,8 @@ class Ticket < ActiveRecord::Base
   has_many :ticket_lines, :dependent => :destroy
   has_many :payments, :as => :owner
 
+  scope :valid, where("status like 'closed'")
+
   def subtotal
     sum = 0
     ticket_lines.each do |t|

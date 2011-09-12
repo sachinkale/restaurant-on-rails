@@ -10,11 +10,25 @@
     #header
       %h1 Restaurant on Rails
       %ul#tabs
-        %li.current
+        %li{:class => "#{current_page?(root_url)?'current':''}"}
           %a{:href => "/"} Home
-        %li
-          %a{:href => "/closecash"} Close Cash
+        %li{:class => "#{current_page?(close_cash_url)?'current':''}"}
+          %a{:href => "/home/close_cash"} Close Cash
         %li
           %a{:href => "/admin"} Admin
-
-    = yield
+      %p#utility_nav
+        - if current_user
+          =current_user.email
+          =link_to "Logout","/users/sign_out", :method => :delete
+      :javascript 
+        $(function(){
+          var error="";
+          error= "#{ flash[:notice].nil? ? '' :  escape_javascript(flash[:notice]) }";
+          if(error != ""){
+            alert(error);
+          }
+        });
+        
+    #wrapper
+      #main{:style => "width:80%;margin:auto"}
+        = yield

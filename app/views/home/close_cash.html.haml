@@ -1,0 +1,33 @@
+%h3
+  Last Close Cash on :
+  =@recent.created_at
+%table
+  %tr
+    %td
+      Total Sale
+    %td
+      = (@total_cash || 0)   +  (@total_card || 0 )  + ( @total_debt || 0 ) + (@total_free || 0)
+  %tr
+    %td
+      Total Cash
+    %td
+      =@total_cash
+  %tr
+    %td
+      Total Card
+    %td
+      =@total_card
+  %tr
+    %td
+      Total Debt
+    %td
+      =@total_debt
+  %tr
+    %td
+      Total Free
+    %td
+      =@total_free
+
+=form_for @close_cash, :url => create_close_cash_path do |f|
+  =f.submit "Close Cash Now"
+

@@ -1,5 +1,7 @@
 Restaurant::Application.routes.draw do
 
+  devise_for :users
+
   ActiveAdmin.routes(self)
 
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -13,6 +15,10 @@ Restaurant::Application.routes.draw do
   resources :r_tables
 
   get "home/index"
+
+  get "home/close_cash", :as => :close_cash
+
+  post "home/create_close_cash", :as => :create_close_cash
 
   get "home/get_products"
 
