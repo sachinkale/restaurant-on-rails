@@ -29,5 +29,7 @@
       =@total_free
 
 =form_for @close_cash, :url => create_close_cash_path do |f|
-  =f.submit "Close Cash Now"
-
+  - if @closed
+    =f.submit "Close Cash Now"
+  -  else
+    =f.submit "Please close open tickets to close cash", :disabled => :disabled

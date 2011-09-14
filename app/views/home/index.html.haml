@@ -75,7 +75,7 @@
       %br
       =label_tag "total_remaining:"
       %span#total_remaining
-      =f.hidden_field :amount
+      =hidden_field_tag :amount_total
     #other_amount{:style => "display:none"}
       =f.text_field :amount
     =f.hidden_field :owner_id

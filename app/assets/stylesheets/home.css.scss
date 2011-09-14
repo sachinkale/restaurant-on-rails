@@ -152,9 +152,10 @@ position:relative;
   border:1px solid #ccc;
   width:44%;
   float:left;
-  min-height:400px;
+  height:400px;
   padding:2px;
   margin:2px;
+  overflow:auto;
 }
 .product{
 width:100px;

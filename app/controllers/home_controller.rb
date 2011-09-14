@@ -18,11 +18,12 @@ class HomeController < ApplicationController
   end
 
   def close_cash
-    unless Ticket.where(:status => nil).empty?
-      flash[:notice] = "Ticket is open, please close the ticket first!"
-      redirect_to "/"
-      return
-    end
+    #unless Ticket.where(:status => nil).empty?
+    #  flash[:notice] = "Ticket is open, please close the ticket first!"
+    #  redirect_to "/"
+    #  return
+    #end
+    @closed = Ticket.where(:status => nil).empty?
     @close_cash = ClosedCash.new
     t = Ticket.arel_table
     @recent = ClosedCash.last

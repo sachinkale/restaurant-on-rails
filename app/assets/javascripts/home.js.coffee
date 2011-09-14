@@ -108,34 +108,56 @@ jQuery ->
     $('.payment').hide()
     $('#p-' + $('.ticket:visible').attr('id').match(/\d+/)[0]).show()
     $('#pay_dialog').dialog 'open'
-    val = parseInt($('.ticket:visible .ticket_total').text())
-    $('.payment:visible .total_amount').html(val)
+    val = 0
     pay = parseInt($('.payment:visible .total_payments').text())
-    $('.payment:visible .total_pending').html(val - pay)
+    tot = parseInt($('.ticket:visible .ticket_total').text())
+    $('.payment:visible .total_pending').html(tot - pay)
+    $('.payment:visible .total_amount').html(tot)
+    if parseInt($('.payment:visible .total_pending').text()) != 0
+      val = parseInt($('.payment:visible .total_pending').text())
+    else
+      val = tot - pay
     if $('#given_amount').is(':visible')
       amt = '#given_amount'
       $('#total_remaining').html(val)
       $('#change_amount').html(0)
+      $('#amount_total').val(val)
     else
       amt = '#payment_amount'
+      $('#amount_total').val(0)
     $(amt).val(val)
     $(amt).select()
     $(amt).focus()
+  updateGiven = -> 
+    $('#given_amount').val(parseInt($('.payment:visible .total_pending').text()))
+    $('#total_remaining').html(0)
+    $('#change_amount').html(0)
+    $('#amount_total').val(parseInt($('.payment:visible .total_pending').text()))
   $('#payment_payment_method_id').change ->
     if $(@).find('option:selected').val() == "2"
-      $('#given_cash').show()
       $('#other_amount').hide()
+      $('#given_cash').show()
+      updateGiven()
     else
       $('#given_cash').hide()
+      $('#payment_amount').val(parseInt($('.payment:visible .total_pending').text()))
       $('#other_amount').show()
   $('#given_amount').change ->
-    tot = parseInt($('.ticket:visible .ticket_total').text())
+    if parseInt($('.payment:visible .total_payments').text()) != 0
+      tot = parseInt($('.ticket:visible .ticket_total').text()) - parseInt($('.payment:visible .total_payments').text())
+      if tot == 0
+        alert 'No need to add payment'
+        return
+    else
+      tot = parseInt($('.ticket:visible .ticket_total').text())
     given = parseInt($('#given_amount').val())
     chg = given - tot
     $('#change_amount').html(chg)
     if given > tot
+      $('#amount_total').val(tot)
       $('#total_remaining').html(0)
     else
+      $('#amount_total').val(given)
       $('#total_remaining').html(tot - given)
 
        
