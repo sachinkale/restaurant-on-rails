@@ -160,4 +160,3 @@ jQuery ->
       $('#amount_total').val(given)
       $('#total_remaining').html(tot - given)
 
-       

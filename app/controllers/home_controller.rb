@@ -15,6 +15,7 @@ class HomeController < ApplicationController
     @products = Product.all(:select => ['code','name']).map { |p| p.code + ' ' + p.name }
     @payment_methods = PaymentMethod.all
     @payment = Payment.new
+    @guests = Guest.all(:select => ['id','FirstName','LastName']).map { |g| g.id.to_s + ' ' + g.FirstName + ' ' + g.LastName }
   end
 
   def close_cash

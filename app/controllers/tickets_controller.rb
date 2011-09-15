@@ -23,6 +23,22 @@ class TicketsController < ApplicationController
 
   end
 
+  def add_guest
+    @ticket = Ticket.find(params[:add_guest][:ticket_id])
+    respond_to do |format|
+      format.js do 
+        if @ticket.update_attribute(:guest_id, params[:add_guest][:guest_id])
+          @error = false
+        else
+          @error = true
+        end
+      end
+    end
+
+
+
+  end
+
   def destroy
   end
 

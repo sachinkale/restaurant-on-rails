@@ -10,6 +10,8 @@ Restaurant::Application.routes.draw do
 
   resources :tickets
 
+  put "ticket_add_guest",:controller => "tickets", :action => "add_guest"
+
   resources :ticket_lines
 
   resources :r_tables

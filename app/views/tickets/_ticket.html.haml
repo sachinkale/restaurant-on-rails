@@ -36,8 +36,8 @@
           total
         %td.ticket_total
           =ticket.total
-  #customerbox
-    =text_field_tag "Customer name"
-    %a.button
-      submit
-  
+  .customer 
+    Customer :
+    %label.customername
+      =ticket.guest.FirstName + ' ' + ticket.guest.LastName if not ticket.guest.nil?
+
