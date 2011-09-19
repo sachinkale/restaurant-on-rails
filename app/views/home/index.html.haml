@@ -31,7 +31,9 @@
             = render :partial => "tickets/ticket", :locals => {:ticket => ticket}
       #customerbox
         =text_field_tag "Customer_name"
-
+        %br
+        Discount Code
+        =text_field_tag "Add Discount"
       .clear
       %hr
       #buttonbox
@@ -104,7 +106,21 @@
   =f.hidden_field :ticket_id
   =f.hidden_field :guest_id
 
-
+#ticketheader.hidden
+  .name
+    ='.' + APP_CONFIG['restaurant_name'].upcase.center(36) + '.'
+  .add1
+    ='.' + APP_CONFIG['r_address_line1'].center(36)  + '.'
+  .add2
+    ='.' + APP_CONFIG['r_address_line2'].center(36) + '.'
+  .add3
+    ='.' + APP_CONFIG['r_address_line3'].center(36) + '.'
+  .web
+    ='.' + APP_CONFIG['r_website'].center(36) + '.'
+  .phone
+    ='.' + APP_CONFIG['r_phone'].center(36) + '.'
+#ticketfooter.hidden
+  ='.' + APP_CONFIG['ticket_footer'].upcase.center(36) + '.'
 
 :javascript
   $(function(){

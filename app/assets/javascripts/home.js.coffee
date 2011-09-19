@@ -160,3 +160,39 @@ jQuery ->
       $('#amount_total').val(given)
       $('#total_remaining').html(tot - given)
 
+  printTicket = -> 
+    str = 'Item            Price   Qty   Value\n-------------------------------------\n';
+    
+    $('.ticket:visible table[class=ui-selectable] tr').each -> 
+      item = $.trim($(this).find('td:first').text())
+      price = $.trim($(this).find('td:nth-child(2)').text())
+      if price.length == 3
+       price = "0" + price + '    '
+      else if price.length == 4
+        price += '    '
+      else
+        price += '   '
+      qty = $.trim($(this).find('td:nth-child(3)').text())
+      itot = $.trim($(this).find('td:nth-child(4)').text())
+      if item.length > 15
+        item = item.substring(0,13) + '..'      
+      else
+        while item.length < 15
+          item = item + ' '
+      str += item + ' ' + price +  qty + '    ' + itot + '\n'
+    subt = $.trim($('.ticket:visible .ticket_subtotal').text())
+    tax = $.trim($('.ticket:visible .ticket_tax').text())
+    d = $.trim($('.ticket:visible .ticket_discount').text())
+    t = $.trim($('.ticket:visible .ticket_total').text())
+    str += '-------------------------------------\n'
+    str += '                    Subtotal: ' + subt + '\n'
+    str += '                    Discount: ' + d + '\n'
+    str += '                         Tax: ' + tax + '\n\n'
+    str += '                       Total: ' + t + '\n'
+    str = $.trim($('#ticketheader .name').text()) + '\n' + $.trim($('#ticketheader .add1').text()) + '\n' + $.trim($('#ticketheader .add2').text()) + '\n' + $.trim($('#ticketheader .add3').text()) + '\n' + $.trim($('#ticketheader .web').text()) + '\n'  + $.trim($('#ticketheader .phone').text()) + '\n\n' + str
+    str += '\n-------------------------------------\n'
+    str += $.trim($('#ticketfooter').text())
+
+    console.log(str)
+  $('#print').click -> 
+    printTicket()

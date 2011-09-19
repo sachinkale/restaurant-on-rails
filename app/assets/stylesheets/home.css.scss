@@ -215,8 +215,8 @@ margin-left:10px;
 #customerbox{
 float:left;
 width:30%;
-
 }
+
 .product {
   max-width:70px;
   text-overflow: ellipsis;
@@ -234,4 +234,7 @@ width:30%;
   right: 25px;
   top: 10px;
   color: #AAA;
+}
+.hidden{
+  display:none;
 }
