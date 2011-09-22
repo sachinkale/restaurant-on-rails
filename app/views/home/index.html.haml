@@ -1,12 +1,22 @@
+%applet{:name => "jZebra", :code => "jzebra.PrintApplet.class", :archive=> "#{asset_path('jzebra.jar')}",:width=> "1",:height=>"1"}
+  %param{:name=>"printer", :value=>"zebra"}
+
+
 #accordion
   %h3 
-    %a="#{@floor.name}"
-  /#tablebox
+    %a Tables
   %div
-    #tablebox
-      - @rtables.each do |r|
-        .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px",:id => "#{ r.active_ticket ? 't' + r.id.to_s + '-ticket-' + r.active_ticket.id.to_s : 't' + r.id.to_s}",:class => "#{ r.active_ticket ? 'occupied' : '' }" }
-          =r.name
+    #floors
+      %ul
+        -@floors.each do |f|
+          %li
+            =link_to "#{f.name}", "#floors-#{f.id}"
+      -@floors.each do |f|
+        %div{:id => "floors-#{f.id}"}
+          .tablebox
+            - f.r_tables.each do |r|
+              .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px",:id => "#{ r.active_ticket ? 't' + r.id.to_s + '-ticket-' + r.active_ticket.id.to_s : 't' + r.id.to_s}",:class => "#{ r.active_ticket ? 'occupied' : '' }" }
+                =r.name
   %h3.billview
     %a Bill 
   #bill
@@ -25,10 +35,11 @@
       #searchbox
         =text_field_tag "search"
       .tickets
-        -@rtables.each do |rt|
-          - ticket = rt.active_ticket
-          - if ticket
-            = render :partial => "tickets/ticket", :locals => {:ticket => ticket}
+        -@floors.each do |f|
+          -f.r_tables.each do |rt|
+            - ticket = rt.active_ticket
+            - if ticket
+              = render :partial => "tickets/ticket", :locals => {:ticket => ticket}
       #customerbox
         =text_field_tag "Customer_name"
         %br
@@ -87,10 +98,11 @@
     =f.hidden_field :owner_type
     =f.submit "add"
   #payments_holder     
-    -@rtables.each do |rt|
-      - ticket = rt.active_ticket
-      - if ticket 
-        = render :partial => "payments/payments", :locals => {:ticket => ticket}
+    -@floors.each do |f|
+      -f.r_tables.each do |rt|
+        - ticket = rt.active_ticket
+        - if ticket 
+          = render :partial => "payments/payments", :locals => {:ticket => ticket}
 
   
 
@@ -146,5 +158,22 @@
         $.rails.handleRemote($('#add_guest'));
       }
     });
+    function monitorFinding(){
+      var applet = document.jZebra;
+      if (applet != null) {
+         applet.findPrinter("zebra");
+         if (!applet.isDoneFinding()) {
+            window.setTimeout('monitorFinding()', 100);
+         } else {
+            var printer = applet.getPrinterName();
+            alert(printer == null ? "Printer not found" : "Printer \"" + printer + "\" found");
+         }
+      } else {
+          alert("Applet not loaded!");
+      }
+    }
+    
+
+   
   });
 

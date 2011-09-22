@@ -6,6 +6,7 @@ jQuery ->
       return false
     else
       return true
+  $('#floors').tabs()
   $('.rtable').button()
   $('.bbutton').button()
   $('#accordion').accordion
@@ -187,12 +188,40 @@ jQuery ->
     str += '-------------------------------------\n'
     str += '                    Subtotal: ' + subt + '\n'
     str += '                    Discount: ' + d + '\n'
-    str += '                         Tax: ' + tax + '\n\n'
+    str += '                         Tax: ' + tax + '\n'
     str += '                       Total: ' + t + '\n'
     str = $.trim($('#ticketheader .name').text()) + '\n' + $.trim($('#ticketheader .add1').text()) + '\n' + $.trim($('#ticketheader .add2').text()) + '\n' + $.trim($('#ticketheader .add3').text()) + '\n' + $.trim($('#ticketheader .web').text()) + '\n'  + $.trim($('#ticketheader .phone').text()) + '\n\n' + str
     str += '\n-------------------------------------\n'
-    str += $.trim($('#ticketfooter').text())
+    str += $.trim($('#ticketfooter').text()) + "\n\n\n\n"
+    str
 
-    console.log(str)
   $('#print').click -> 
-    printTicket()
+    str = printTicket()
+    jPrint(str)
+    console.log(str)
+  monitorPrinting = -> 
+    applet = document.jZebra;
+    if applet != null 
+      if (!applet.isDonePrinting()) 
+        window.setTimeout('monitorPrinting()', 100)
+      else 
+        e = applet.getException();
+        alert(e == null ? "Printed Successfully" : "Exception occured: " + e.getLocalizedMessage())
+    else 
+      alert("Applet not loaded!");
+      
+    
+  chr = (str) -> 
+    String.fromCharCode(str)
+  jPrint = (str) -> 
+    applet = document.jZebra
+    if applet != null
+      #applet.append(chr(27) + "\x61" + "\x31");
+      applet.append(str)
+      applet.print()
+      monitorPrinting()
+      applet.append(chr(27) + chr(105));
+      applet.print()
+    else 
+      alert "applet not loaded"
+
