@@ -1,0 +1,29 @@
+<% if @error %>
+  alert("error, while updating ticket");
+<% else %>
+  jQuery(function(){
+    t1 = $('#t<%= params[:change_table][:orig_table_id]%>-ticket-<%= @ticket.id %>');
+    t1.removeClass('occupied');
+    t1.addClass('notoccupied');
+    t1.attr('id','t<%= params[:change_table][:orig_table_id] %>');
+    t2 = $('#t<%= params[:change_table][:table_id] %>');
+    t2.addClass('occupied');
+    t2.removeClass('notoccupied');
+    t2.attr('id','t<%= params[:change_table][:table_id] %>-ticket-<%= @ticket.id %>');
+    $(".occupied").draggable({ opacity: 0.7, helper: "clone" });
+    $(".notoccupied").droppable({
+      accept: '.occupied',
+      activeClass: "ui-state-hover",
+      hoverClass: "ui-state-active",
+      drop: function(event,ui) {
+        t = ui.draggable.attr('id').split(/ticket-/);
+        $('#change_table_ticket_id').val(t[1]);
+        $('#change_table_orig_table_id').val(t[0].match(/\d+/)[0]);
+        $('#change_table_table_id').val($(this).attr('id').match(/\d+/)[0]);
+        $.rails.handleRemote($('#change_table'));
+      }
+      });
+  });
+
+<% end %>
+
