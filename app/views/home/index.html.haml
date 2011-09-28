@@ -15,7 +15,7 @@
         %div{:id => "floors-#{f.id}"}
           .tablebox
             - f.r_tables.each do |r|
-              .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px",:id => "#{ r.active_ticket ? 't' + r.id.to_s + '-ticket-' + r.active_ticket.id.to_s : 't' + r.id.to_s}",:class => "#{ r.active_ticket ? 'occupied' : '' }" }
+              .rtable{:style => "top:#{r.x_position}px;left:#{r.y_position}px",:id => "#{ r.active_ticket ? 't' + r.id.to_s + '-ticket-' + r.active_ticket.id.to_s : 't' + r.id.to_s}",:class => "#{ r.active_ticket ? 'occupied' : 'notoccupied' }" }
                 =r.name
   %h3.billview
     %a Bill 
@@ -117,7 +117,10 @@
 =form_for :add_guest, :url => '/ticket_add_guest', :html =>{ :method => :put, :id => "add_guest", } , :remote => true do |f|
   =f.hidden_field :ticket_id
   =f.hidden_field :guest_id
-
+=form_for :change_table, :url => '/ticket_change_table', :html =>{ :method => :put, :id => "change_table", } , :remote => true do |f|
+  =f.hidden_field :ticket_id
+  =f.hidden_field :table_id
+  =f.hidden_field :orig_table_id
 #ticketheader.hidden
   .name
     ='.' + APP_CONFIG['restaurant_name'].upcase.center(36) + '.'

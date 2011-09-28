@@ -96,6 +96,12 @@ jQuery ->
         if checkpayment()
           $('#ticket_status').val('closed')
           $.rails.handleRemote($('#update_ticket'))
+          if $(this).find('.payment:visible #print_check').prop('checked')
+            str = printTicket()
+            str += printPay($(this).find('.payment:visible'))
+            str += '\n-------------------------------------\n'
+            str += $.trim($('#ticketfooter').text()) + "\n\n\n\n"
+            console.log str
           $(this).dialog("close") 
         else
           alert "Pending Payment must be zero"
@@ -160,8 +166,17 @@ jQuery ->
     else
       $('#amount_total').val(given)
       $('#total_remaining').html(tot - given)
-
+  printPay = (pay) -> 
+    console.log 'in print pay'
+    console.log pay
+    str = "";
+    $(pay).find('table tr').each ->
+       str += $.trim($(this).find('td:first').text()) + ' ' + $.trim($(this).find('td:nth-child(2)').text()) + '\n'
+    str
+    
   printTicket = -> 
+
+    str += '\n-------------------------------------\n'
     str = 'Item            Price   Qty   Value\n-------------------------------------\n';
     
     $('.ticket:visible table[class=ui-selectable] tr').each -> 
@@ -192,11 +207,11 @@ jQuery ->
     str += '                       Total: ' + t + '\n'
     str = $.trim($('#ticketheader .name').text()) + '\n' + $.trim($('#ticketheader .add1').text()) + '\n' + $.trim($('#ticketheader .add2').text()) + '\n' + $.trim($('#ticketheader .add3').text()) + '\n' + $.trim($('#ticketheader .web').text()) + '\n'  + $.trim($('#ticketheader .phone').text()) + '\n\n' + str
     str += '\n-------------------------------------\n'
-    str += $.trim($('#ticketfooter').text()) + "\n\n\n\n"
     str
 
   $('#print').click -> 
     str = printTicket()
+    str += $.trim($('#ticketfooter').text()) + "\n\n\n\n"
     jPrint(str)
     console.log(str)
   monitorPrinting = -> 
@@ -224,4 +239,23 @@ jQuery ->
       applet.print()
     else 
       alert "applet not loaded"
+
+  $(".occupied").draggable({ opacity: 0.7, helper: "clone" })
+  $(".notoccupied").droppable
+    accept: '.occupied',
+    activeClass: "ui-state-hover",
+    hoverClass: "ui-state-active",
+    drop: (event,ui) ->
+      t = ui.draggable.attr('id').split(/ticket-/)
+      $('#change_table_ticket_id').val(t[1])
+      $('#change_table_orig_table_id').val(t[0].match(/\d+/)[0])
+      $('#change_table_table_id').val($(@).attr('id').match(/\d+/)[0])
+      $.rails.handleRemote($('#change_table'))
+
+      #alert "dropped"
+
+
+
+
+        
 

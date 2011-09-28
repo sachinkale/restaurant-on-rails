@@ -38,6 +38,20 @@ class TicketsController < ApplicationController
 
 
   end
+  
+  def change_table
+    @ticket = Ticket.find(params[:change_table][:ticket_id])
+    respond_to do |format|
+      format.js do
+        if @ticket.update_attribute(:r_table_id, params[:change_table][:table_id])
+          @error = false
+        else
+          @error = true
+        end
+      end
+    end
+
+  end
 
   def destroy
   end
