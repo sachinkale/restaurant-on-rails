@@ -3,6 +3,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :guest
   has_many :ticket_lines, :dependent => :destroy
   has_many :payments, :as => :owner
+  has_one :discount
 
   scope :valid, where("status like 'closed'")
 
@@ -14,8 +15,12 @@ class Ticket < ActiveRecord::Base
     return sum
   end
 
-  def discount
-    return 0
+  def get_discount
+    if discount.nil?
+      return 0
+    else
+      return (subtotal * APP_CONFIG['discount']/100).round
+    end
   end
 
   def tax
@@ -23,7 +28,10 @@ class Ticket < ActiveRecord::Base
   end
 
   def total
-    subtotal - discount + tax 
+    subtotal - get_discount + tax 
   end
+
+
+
 
 end

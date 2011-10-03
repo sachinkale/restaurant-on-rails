@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  guest_id: 1
+  ticket_id: 1
+  gcode: MyString
+  status: MyString
+
+two:
+  guest_id: 1
+  ticket_id: 1
+  gcode: MyString
+  status: MyString

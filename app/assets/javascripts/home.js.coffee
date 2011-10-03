@@ -40,6 +40,7 @@ jQuery ->
     $('#ticket_line_qty').val(1)
     $.rails.handleRemote($('#new_ticket_line'))
 
+
   $('#void_dialog').dialog
     modal: true,
     autoOpen: false,
@@ -252,7 +253,10 @@ jQuery ->
       $('#change_table_table_id').val($(@).attr('id').match(/\d+/)[0])
       $.rails.handleRemote($('#change_table'))
 
-      #alert "dropped"
+  $('#adddiscount').click ->
+    $('#add_discount_ticket_id').val($('.ticket:visible').attr('id').match(/\d+/)[0]);
+    $('#discount_code').val($('#AddDiscount').val())
+    $.rails.handleRemote($('#add_discount'));
 
 
 

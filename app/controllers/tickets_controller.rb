@@ -23,6 +23,24 @@ class TicketsController < ApplicationController
 
   end
 
+  def add_discount
+    @ticket = Ticket.find(params[:add_discount][:ticket_id])
+    @discount = Discount.where("dcode like ?",params[:discount_code])[0]
+
+
+    respond_to do |format|
+      format.js do 
+        if not @discount.nil? and @discount.status.nil? and not @discount.created_at < 5.minutes.ago
+          @discount.ticket = @ticket
+          @discount.status = "used"
+          @error = false if not @discount.save
+        else
+          @error = true
+        end
+      end
+    end
+  end
+
   def add_guest
     @ticket = Ticket.find(params[:add_guest][:ticket_id])
     respond_to do |format|
@@ -34,10 +52,8 @@ class TicketsController < ApplicationController
         end
       end
     end
-
-
-
   end
+
   
   def change_table
     @ticket = Ticket.find(params[:change_table][:ticket_id])

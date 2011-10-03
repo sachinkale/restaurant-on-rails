@@ -10,7 +10,7 @@ jQuery ->
   <% end %>
   
   $('#rt' + <%= @ticket.id %>  + ' .ticket_subtotal').html(<%= @ticket.subtotal %>)
-  $('#rt' + <%= @ticket.id %>  + ' .ticket_discount').html(<%= @ticket.discount %>)
+  $('#rt' + <%= @ticket.id %>  + ' .ticket_discount').html(<%= @ticket.get_discount %>)
   $('#rt' + <%= @ticket.id %>  + ' .ticket_tax').html(<%= @ticket.tax %>)
   $('#rt' + <%= @ticket.id %>  + ' .ticket_total').html(<%= @ticket.total %>)
  

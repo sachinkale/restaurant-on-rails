@@ -44,7 +44,10 @@
         =text_field_tag "Customer_name"
         %br
         Discount Code
-        =text_field_tag "Add Discount"
+        =text_field_tag "AddDiscount",'',:style => "width:60px"
+        %button#adddiscount
+          Add
+
       .clear
       %hr
       #buttonbox
@@ -70,15 +73,6 @@
                 =p.name
     .clear
     
-= form_for @ticket, :remote => :true do |f|
-  = f.hidden_field :r_table_id
-= form_for @ticket_line,:remote => :true do |f|
-  = f.hidden_field :ticket_id
-  = hidden_field_tag :code
-  = f.hidden_field :qty
-= form_tag "/update_ticket_lines", :method => :put, :id => :update_ticket_lines do
-  =hidden_field_tag :action_for_ticket
-  =hidden_field_tag :ticket_line_ids
 
 #pay_dialog{:title => "Pay Bill", :style => "display:none;"}
   =form_for @payment, :remote => true do |f|
@@ -114,6 +108,9 @@
     =f.hidden_field :guest_id
     Notes:
     =f.text_area :notes
+
+
+/FORMs
 =form_for :add_guest, :url => '/ticket_add_guest', :html =>{ :method => :put, :id => "add_guest", } , :remote => true do |f|
   =f.hidden_field :ticket_id
   =f.hidden_field :guest_id
@@ -121,6 +118,20 @@
   =f.hidden_field :ticket_id
   =f.hidden_field :table_id
   =f.hidden_field :orig_table_id
+=form_for :add_discount, :url => '/ticket_add_discount', :html =>{ :method => :put, :id => "add_discount", } , :remote => true do |f|
+  =f.hidden_field :ticket_id
+  =hidden_field_tag :discount_code
+= form_for @ticket, :remote => :true do |f|
+  = f.hidden_field :r_table_id
+= form_for @ticket_line,:remote => :true do |f|
+  = f.hidden_field :ticket_id
+  = hidden_field_tag :code
+  = f.hidden_field :qty
+= form_tag "/update_ticket_lines", :method => :put, :id => :update_ticket_lines do
+  =hidden_field_tag :action_for_ticket
+  =hidden_field_tag :ticket_line_ids
+
+
 #ticketheader.hidden
   .name
     ='.' + APP_CONFIG['restaurant_name'].upcase.center(36) + '.'
