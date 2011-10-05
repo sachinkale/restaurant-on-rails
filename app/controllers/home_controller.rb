@@ -19,19 +19,14 @@ class HomeController < ApplicationController
   end
 
   def close_cash
-    #unless Ticket.where(:status => nil).empty?
-    #  flash[:notice] = "Ticket is open, please close the ticket first!"
-    #  redirect_to "/"
-    #  return
-    #end
     @closed = Ticket.where(:status => nil).empty?
-    @close_cash = ClosedCash.new
     t = Ticket.arel_table
-    @recent = ClosedCash.last
-    if @recent.nil?
+    @closed_cash = ClosedCash.last
+    if @closed_cash.nil?
       tickets = Ticket.valid.map{ |t| t.id }
+      @closed_cash = ClosedCash.create
     else
-      tickets = Ticket.valid.where(t[:created_at].gt(@recent.created_at)).map{ |t| t.id }
+      tickets = Ticket.valid.where(t[:created_at].gt(@closed_cash.created_at)).map{ |t| t.id }
     end
     @total_sale  = 0
     @total_free =  Payment.joins(:payment_method).where("payment_methods.name like 'Free'").where("payments.owner_id in (?)", tickets).select('sum(amount)')[0].send('sum(amount)')
@@ -44,7 +39,8 @@ class HomeController < ApplicationController
   end
 
   def create_close_cash
-     
+     @closed_cash = ClosedCash.find(params[:id])
+     @closed_cash.touch
      if not ClosedCash.create
        flash[:notice] = "Error while closing cash!"
      end

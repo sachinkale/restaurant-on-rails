@@ -1,6 +1,6 @@
 %h3
   Last Close Cash on :
-  =@recent.created_at
+  =@closed_cash.created_at.in_time_zone
 %table
   %tr
     %td
@@ -28,7 +28,7 @@
     %td
       =@total_free
 
-=form_for @close_cash, :url => create_close_cash_path do |f|
+=form_for @closed_cash, :url => create_close_cash_path(:id => @closed_cash.id) do |f|
   - if @closed
     =f.submit "Close Cash Now"
   -  else

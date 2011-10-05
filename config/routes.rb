@@ -24,7 +24,7 @@ Restaurant::Application.routes.draw do
 
   get "home/close_cash", :as => :close_cash
 
-  post "home/create_close_cash", :as => :create_close_cash
+  put "home/create_close_cash/:id", :controller => "home", :action => "create_close_cash", :as => :create_close_cash
 
   get "home/get_products"
 
